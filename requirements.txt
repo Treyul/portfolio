@@ -1,2 +1,2 @@
 Django
-python-decouple
+python-dotenv

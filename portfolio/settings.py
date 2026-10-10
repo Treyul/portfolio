@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / '.env')
+load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,22 +26,9 @@ load_dotenv(BASE_DIR / '.env')
 SECRET_KEY = os.getenv('SECRET_KEY', 'unsafe-development-key-change-me')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-def parse_debug(value):
-    value = str(value).strip().lower()
-    if value in {'1', 'true', 'yes', 'on', 'debug', 'development', 'dev'}:
-        return True
-    if value in {'0', 'false', 'no', 'off', 'release', 'production', 'prod'}:
-        return False
-    raise ValueError('DEBUG must be a boolean or a development/release environment name.')
+DEBUG = os.getenv('DEBUG', 'False') == True
 
-
-DEBUG = os.getenv('DEBUG', 'False')
-
-ALLOWED_HOSTS = [
-    # for host in
-    os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0').split(',')
-        # if host.strip()
-]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0').split(',')
 
 
 # Application definition
@@ -100,9 +87,7 @@ STATICFILES_DIRS = [
 # Contact mail is the only server-side application feature. Configure these
 # through environment variables in deployment; console delivery is convenient
 # for local development.
-EMAIL_BACKEND = os.getenv(
-    'EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend'
-)
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
 EMAIL_HOST = os.getenv('EMAIL_HOST', '')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '465'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
